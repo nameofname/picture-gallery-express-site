@@ -1,14 +1,8 @@
 var express = require('express');
 var app = express();
-var dive = require('dive');
-var imagesDir = express.static(__dirname + '../pics/inspiration/');
+//var imagesDir = express.static(__dirname + '../pics/inspiration/');
 var imagesPath = __dirname + '/../pics/inspiration/';
 var fs = require('fs');
-
-//app.use('/images*', function (req, res) {
-//    return res.send('iamges');
-//});
-//app.use('/images*', imagesDir); 
 
 app.use('/css', express.static(__dirname + '/css'));
 
@@ -29,18 +23,22 @@ app.get('/', function (req, res) {
 
 app.use('/ajax', function (req, res, next) {
     var prefix = '/images/';
-    var index = 0; 
     var arr = fs.readdirSync(imagesPath, function (err, files) {
         return files;
     });
     var out = [];
-    arr.forEach(function (file) {
-        var fileName = prefix + file;
+    var offset = req.query.offset || 0;
+    var limit = req.query.limit || 30;
+
+    lewp:
+    for (var idx = offset; idx < limit; idx++) {
+        var fileName = prefix + arr[idx];
         out.push(fileName);
-        if (out.length > 30) {
-            return res.json(out);
+        if (idx === limit) {
+            break lewp;
         }
-    });
+    }
+    return res.json(out);
 });
 
 
