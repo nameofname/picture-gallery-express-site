@@ -1,20 +1,26 @@
 var $doc = $(document);
 var offset = -30;
 var limit = 0;
+var width = 300;
 var urlBase = '/ajax';
-var template = _.template('<div class="img"><img width="500px" src="<%= image.src %>" /></div>', null, {variable : 'image'});
+var tmpString = '<div class="img">' +
+    '<a target="_blank" href="<%= image.src %>">' +
+    '<img width="' + width + 'px" src="<%= image.src %>" />' +
+    '</a>' +
+    '</div>';
+var template = _.template(tmpString, null, {variable : 'image'});
 var _addImages = function (data) {
     _.each(data, function (val) {
         var image = template({src : val});
         $('body').append(image);
     });
 
-    setTimeout(function () {
-        $('body').masonry({
+    $('body').imagesLoaded(function(){
+        new Masonry(document.querySelector('body'), {
             itemSelector: '.img',
-            columnWidth: 500
+            columnWidth: width + 15
         });
-    }, 1000);
+    });
 };
 var _getImages = function () {
     limit += 30;
