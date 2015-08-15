@@ -23,17 +23,20 @@ app.get('/', function (req, res) {
 
 app.use('/ajax', function (req, res, next) {
     var prefix = '/images/';
-    var arr = fs.readdirSync(imagesPath, function (err, files) {
-        return files;
-    });
     var out = [];
     var offset = req.query.offset || 0;
     var limit = req.query.limit || 30;
+    var fileName;
+    var arr = fs.readdirSync(imagesPath, function (err, files) {
+        return files;
+    });
 
     lewp:
     for (var idx = offset; idx < limit; idx++) {
-        var fileName = prefix + arr[idx];
-        out.push(fileName);
+        if (arr[idx]) {
+            fileName = prefix + arr[idx];
+            out.push(fileName);
+        }
         if (idx === limit) {
             break lewp;
         }
