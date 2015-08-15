@@ -21,8 +21,9 @@ app.get('/', function (req, res) {
 app.use('/ajax', function (req, res, next) {
     var prefix = '/images/';
     var out = [];
-    var offset = req.query.offset || 0;
-    var limit = req.query.limit || 30;
+    var offset = parseInt(req.query.offset) || 0;
+    var limit = parseInt(req.query.limit) || 30;
+    var max = limit; // max must be different than limit so it can be incremented below
     var fileName;
     var fullPath;
     var isImage;
@@ -30,15 +31,26 @@ app.use('/ajax', function (req, res, next) {
         return files;
     });
 
+    // Iterate from the offset to the limit. For each iteration, push the next image to the output array IF it is
+    // not undefined and is an image. If the file is not an image, increment max but not limit so that the loop tries
+    // again. Break on finding an undefined index (at the end of the images array) or when your output array reaches
+    // the limit.
     lewp:
-    for (var idx = offset; idx < limit; idx++) {
-        fullPath = imagesPath + arr[idx];
+    for (var i = offset; i <= max; i++) {
+        fullPath = imagesPath + arr[i];
         isImage = mime.lookup(fullPath).split('/')[0] === 'image';
-        if (arr[idx] && isImage) {
-            fileName = prefix + arr[idx];
-            out.push(fileName);
+
+        if (!arr[i]) {
+            break lewp;
         }
-        if (arr.length === limit) {
+
+        if (arr[i] && isImage) {
+            fileName = prefix + arr[i];
+            out.push(fileName);
+        } else {
+            max++;
+        }
+        if (out.length === limit) {
             break lewp;
         }
     }
