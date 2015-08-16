@@ -36,7 +36,7 @@ app.use('/ajax', function (req, res, next) {
     // again. Break on finding an undefined index (at the end of the images array) or when your output array reaches
     // the limit.
     lewp:
-    for (var i = offset; i <= max; i++) {
+    for (var i = offset; i < max; i++) {
         fullPath = imagesPath + arr[i];
         isImage = mime.lookup(fullPath).split('/')[0] === 'image';
 
