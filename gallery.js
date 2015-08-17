@@ -1,4 +1,5 @@
 var express = require('express');
+var _ = require('underscore');
 var app = express();
 var mime = require('mime');
 var imagesPath = __dirname + '/../pics/inspiration/';
@@ -23,33 +24,25 @@ app.use('/ajax', function (req, res, next) {
     var out = [];
     var offset = parseInt(req.query.offset) || 0;
     var limit = parseInt(req.query.limit) || 30;
-    var max = limit; // max must be different than limit so it can be incremented below
     var fileName;
     var fullPath;
-    var isImage;
-    var arr = fs.readdirSync(imagesPath, function (err, files) {
-        return files;
+    // read all the files in the images dir then filter out anything that is not an image.
+    var arr = _.filter(fs.readdirSync(imagesPath), function (file) {
+        fullPath = imagesPath + file;
+        var test = mime.lookup(fullPath).split('/')[0] === 'image';
+        console.log('testing out this shit. ', test);
+        return test;
     });
 
-    // Iterate from the offset to the limit. For each iteration, push the next image to the output array IF it is
-    // not undefined and is an image. If the file is not an image, increment max but not limit so that the loop tries
-    // again. Break on finding an undefined index (at the end of the images array) or when your output array reaches
-    // the limit.
     lewp:
-    for (var i = offset; i < max; i++) {
-        fullPath = imagesPath + arr[i];
-        isImage = mime.lookup(fullPath).split('/')[0] === 'image';
-
+    for (var i = offset; i < limit; i++) {
         if (!arr[i]) {
             break lewp;
         }
 
-        if (arr[i] && isImage) {
-            fileName = prefix + arr[i];
-            out.push(fileName);
-        } else {
-            max++;
-        }
+        fileName = prefix + arr[i];
+        out.push(fileName);
+
         if (out.length === limit) {
             break lewp;
         }
