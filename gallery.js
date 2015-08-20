@@ -30,7 +30,6 @@ app.use('/ajax', function (req, res, next) {
     var arr = _.filter(fs.readdirSync(imagesPath), function (file) {
         fullPath = imagesPath + file;
         var test = mime.lookup(fullPath).split('/')[0] === 'image';
-        console.log('testing out this shit. ', test);
         return test;
     });
 
