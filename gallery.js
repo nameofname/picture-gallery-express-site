@@ -46,6 +46,7 @@ app.use('/ajax', function (req, res, next) {
             break lewp;
         }
     }
+    console.log('returned the following images', out);
     return res.json(out);
 });
 
