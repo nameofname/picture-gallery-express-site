@@ -20,8 +20,10 @@ var _initSelectors = function () {
 };
 var _addImages = function (data) {
     _.each(data, function (val) {
-        var image = template({src : val});
-        $images.append(image);
+        var img = val.split('/');
+        img[img.length-1] = encodeURIComponent(img[img.length-1]);
+        var html = template({src : img.join('/')});
+        $images.append(html);
     });
 
     $images.imagesLoaded(function() {
