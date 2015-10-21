@@ -2,7 +2,7 @@ var express = require('express');
 var _ = require('underscore');
 var app = express();
 var mime = require('mime');
-var imagesPath = __dirname + '/../pics/inspiration/';
+var imagesPath = require('./conf').imageDir;
 var fs = require('fs');
 
 app.use('/css', express.static(__dirname + '/css'));
