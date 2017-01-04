@@ -4,7 +4,9 @@ module.exports = function () {
 
     var express = require('express');
     var app = express();
-    var imagesPath = require('./conf').imageDir;
+    var conf = require('./conf');
+    var imagesPath = conf.imageDir;
+    var port = conf.port;
     var fs = require('fs');
     var readAllFiles = require('./readAllFiles');
 
@@ -57,7 +59,7 @@ module.exports = function () {
     });
 
 
-    var server = app.listen(3000, function () {
+    var server = app.listen(port, function () {
         var host = server.address().address;
         var port = server.address().port;
         console.log('Image Gallery app listening at http://%s:%s', host, port);
