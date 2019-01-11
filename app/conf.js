@@ -1,4 +1,4 @@
 module.exports = {
-    imageDir : '/Users/ronald/Pictures/pics/inspiration',
-    port: 1212
+    imageDir : '/Users/ronald/Pictures/pics/illustrators\ and\ artists/',
+    port: 1312
 };
