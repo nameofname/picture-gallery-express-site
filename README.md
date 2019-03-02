@@ -1,10 +1,9 @@
 # picture-gallery-express-site
 
-npm install
-
-supervisor gallery.js
-
-... that is all. 
+- modify app/conf.js to point at local image dir
+- yarn // or 'npm install'
+- node gallery.js
+- ... that is all. 
 
 
 TODO :::

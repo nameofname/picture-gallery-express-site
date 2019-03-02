@@ -25,15 +25,15 @@ module.exports = function () {
     });
 
     app.use('/ajax', function (req, res, next) {
-        var prefix = '/images/';
-        var out = [];
-        var offset = parseInt(req.query.offset) || 0;
-        var limit = parseInt(req.query.limit) || 30;
-        var fileName;
-        var arr = readAllFiles(imagesPath);
+        const prefix = '/images/';
+        const out = [];
+        const offset = parseInt(req.query.offset) || 0;
+        const limit = parseInt(req.query.limit) || 30;
+        let fileName;
+        const arr = readAllFiles(imagesPath);
 
         lewp:
-            for (var i = offset; i < limit; i++) {
+            for (let i = offset; i < limit; i++) {
                 if (!arr[i]) {
                     break lewp;
                 }
@@ -59,9 +59,9 @@ module.exports = function () {
     });
 
 
-    var server = app.listen(port, function () {
-        var host = server.address().address;
-        var port = server.address().port;
+    const server = app.listen(3000, function () {
+        const host = server.address().address;
+        const port = server.address().port;
         console.log('Image Gallery app listening at http://%s:%s', host, port);
     });
 

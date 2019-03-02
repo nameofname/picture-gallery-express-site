@@ -1,15 +1,17 @@
 "use strict";
 
-var _ = require('underscore');
-var mime = require('mime');
-var diveSync = require('diveSync');
-var diveConf = {
+const fs = require('fs');
+const _ = require('underscore');
+const mime = require('mime');
+const diveSync = require('diveSync');
+const logger = require('pint-sized-logger');
+const diveConf = {
     recursive: true,
     all: false,
     directories: false,
     files: true
 };
-var arr = [];
+const arr = [];
 
 
 module.exports = function (path) {
@@ -22,14 +24,21 @@ module.exports = function (path) {
     // read all the files in the images dir
     diveSync(path, diveConf, function(err, fsPath) {
         if (err) {
-            throw err;
+            logger.error(err);
+            return;
         }
 
         // filter out anything that is not an image.
-        var test = mime.lookup(fsPath).split('/')[0] === 'image';
+        const exists = fs.existsSync(fsPath);
+        logger.trace('exists', exists, fsPath)
+        if (exists) {
+            const isImage = mime.lookup(fsPath).split('/')[0] === 'image';
+            const isSymlink = fs.lstatSync(fsPath).isSymbolicLink();
+            const test = isImage && !isSymlink;
 
-        if (test) {
-            arr.push(fsPath);
+            if (test) {
+                arr.push(fsPath);
+            }
         }
     });
 
