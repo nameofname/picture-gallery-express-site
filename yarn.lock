@@ -112,6 +112,11 @@ cliui@^2.1.0:
     right-align "^0.1.1"
     wordwrap "0.0.2"
 
+colors@^1.1.2:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/colors/-/colors-1.3.3.tgz#39e005d546afe01e01f9c4ca8fa50f686a01205d"
+  integrity sha512-mmGt/1pZqYRjMxB1axhTo16/snVZ5krrKkcmMeVKxzECMMXoCgnvTPp10QgHfcbQZw8Dq2jMNG6je4JlWU0gWg==
+
 commander@2.8.x:
   version "2.8.1"
   resolved "http://npm.intranet.1stdibs.com:4783/commander/-/commander-2.8.1.tgz#06be367febfda0c330aa1e2a072d3dc9762425d4"
@@ -511,6 +516,13 @@ path-to-regexp@0.1.7:
   version "0.1.7"
   resolved "http://npm.intranet.1stdibs.com:4783/path-to-regexp/-/path-to-regexp-0.1.7.tgz#df604178005f522f15eb4490e7247a1bfaa67f8c"
   integrity sha1-32BBeABfUi8V60SQ5yR6G/qmf4w=
+
+pint-sized-logger@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/pint-sized-logger/-/pint-sized-logger-1.0.3.tgz#bf9b02f468330074a530fbf8e70e5ae2040f713b"
+  integrity sha512-2MDL7Xh4ruKN67pAF74vZRc/K/2dnPBGxrWRyh1R7DhVSeFW+hEkW0DZt8xXphHRG71+w3ZwqTeyeXkmG5ke2A==
+  dependencies:
+    colors "^1.1.2"
 
 promise@^6.0.1:
   version "6.1.0"
