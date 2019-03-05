@@ -21,7 +21,7 @@ var _initSelectors = function () {
 var _addImages = function (data) {
     _.each(data, function (val) {
         var img = val.split('/');
-        img[img.length-1] = encodeURIComponent(img[img.length-1]);
+        img = img.map(encodeURIComponent);
         var html = template({src : img.join('/')});
         $images.append(html);
     });
