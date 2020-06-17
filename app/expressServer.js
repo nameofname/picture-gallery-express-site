@@ -1,14 +1,16 @@
 "use strict";
 
+var express = require('express');
+var conf = require('./conf');
+var fs = require('fs');
+var readAllFiles = require('./readAllFiles');
+var ejs = require('ejs');
+
 module.exports = function () {
 
-    var express = require('express');
     var app = express();
-    var conf = require('./conf');
     var imagesPath = conf.imageDir;
     var port = conf.port;
-    var fs = require('fs');
-    var readAllFiles = require('./readAllFiles');
 
     app.use('/css', express.static(__dirname + '/../css'));
 
@@ -18,7 +20,7 @@ module.exports = function () {
 
     app.set('views', __dirname + '/../html');
 
-    app.engine('html', require('ejs').renderFile);
+    app.engine('html', ejs.renderFile);
 
     app.get('/', function (req, res) {
         return res.render('index.html');
