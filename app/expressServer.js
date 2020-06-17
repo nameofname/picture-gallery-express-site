@@ -1,12 +1,11 @@
 "use strict";
 
 var express = require('express');
-var conf = require('./conf');
 var fs = require('fs');
 var readAllFiles = require('./readAllFiles');
 var ejs = require('ejs');
 
-module.exports = function () {
+module.exports = function (conf) {
 
     var app = express();
     var imagesPath = conf.imageDir;
