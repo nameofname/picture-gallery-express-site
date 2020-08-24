@@ -7,13 +7,11 @@ var ejs = require('ejs');
 
 module.exports = function (conf) {
 
-    var app = express();
-    var imagesPath = conf.imageDir;
-    var port = conf.port;
+    const app = express();
 
     app.use('/css', express.static(__dirname + '/../css'));
 
-    app.use('/images', express.static(fs.realpathSync(imagesPath)));
+    app.use('/images', express.static(fs.realpathSync(conf.imageDir)));
 
     app.use('/js', express.static(__dirname + '/../js'));
 
@@ -31,7 +29,7 @@ module.exports = function (conf) {
         const offset = parseInt(req.query.offset) || 0;
         const limit = parseInt(req.query.limit) || 30;
         let fileName;
-        const arr = readAllFiles(imagesPath);
+        const arr = readAllFiles(conf.imageDir);
 
         lewp:
             for (let i = offset; i < limit; i++) {
@@ -39,15 +37,13 @@ module.exports = function (conf) {
                     break lewp;
                 }
 
-                fileName = arr[i].split(imagesPath)[1];
+                fileName = arr[i].split(conf.imageDir)[1];
                 fileName = prefix + fileName;
 
                 console.log('looking at the following : ');
                 console.log(arr[i]);
-                console.log(imagesPath);
-                console.log(arr[i].split(imagesPath));
-
-
+                console.log(conf.imageDir);
+                console.log(arr[i].split(conf.imageDir));
 
                 out.push(fileName);
 
@@ -59,11 +55,6 @@ module.exports = function (conf) {
         return res.json(out);
     });
 
-
-    const server = app.listen(3000, function () {
-        const host = server.address().address;
-        const port = server.address().port;
-        console.log('Image Gallery app listening at http://%s:%s', host, port);
-    });
-
+    console.log(`Starting express with port ${conf.port} and image dir ${conf.imageDir}`);
+    app.listen(conf.port);
 };
