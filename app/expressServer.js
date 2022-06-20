@@ -55,6 +55,16 @@ module.exports = function (conf) {
         return res.json(out);
     });
 
+    // not related to the core app, testing moving script tags around a page and seeing how it affects rendering :
+    app.use('/renderTest', function(req, res, next) {
+        return res.render('renderTest.html');
+    });
+    app.use('/slow/script.js', function(req, res, next) {
+        setTimeout(function() {
+            res.send('console.log("It is loaded!")');
+        }, 2000);
+    });
+
     console.log(`Starting express with port ${conf.port} and image dir ${conf.imageDir}`);
     app.listen(conf.port);
 };
